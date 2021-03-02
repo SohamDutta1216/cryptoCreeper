@@ -1,21 +1,26 @@
 import React from 'react'
 
-export default function Coin({ image, name, symbol, price, volume, priceChange, marketcap }) {
+export default function Coin({ image, name, symbol, price, volume, priceChange, marketcap, rank }) {
   return (
 
-    <div style={{ marginTop: '10px', marginLeft: '80px', marginRight: '80px' }}>
+    <div style={{ marginTop: '10px', marginLeft: '1px', marginRight: '1px' }}>
       <table class="ui inverted table">
         <thead>
           <tr>
+            <th>Rank</th>
             <th>Coin</th>
             <th>Price</th>
             <th>Volume</th>
             <th>1H</th>
             <th>Market Cap</th>
+            <th>Investments</th>
           </tr>
         </thead>
         <tbody class="ui left aligned">
           <tr>
+            <td >
+              <h2>{rank}</h2>
+            </td>
             <td class="ui center aligned tiny circular image">
               <img src={image} alt='crypto' />
               <h5 >{symbol.toUpperCase()}</h5>
@@ -41,6 +46,14 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
               <p >
                 {marketcap.toLocaleString()}
               </p>
+            </td>
+            <td>
+              <p>Amount Purchased:</p> <input />
+              <p>Price at Purchase:</p> <input />
+              <br />
+              <br />
+              <br />
+              <button class="fluid ui orange button">Add</button>
             </td>
           </tr>
         </tbody>

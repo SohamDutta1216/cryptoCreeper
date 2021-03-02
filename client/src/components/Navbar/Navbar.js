@@ -14,7 +14,7 @@ export default function Navbar({ setSearch }) {
           </Link>
           <div className="item">
             <form>
-              <div class="ui category search">
+              <div class="ui large category search">
                 <div class="ui icon input">
                   <input
                     class="prompt"
