@@ -21,7 +21,7 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
             <td >
               <h2>{rank}</h2>
             </td>
-            <td class="ui center aligned tiny circular image">
+            <td class="ui center aligned small circular image">
               <img src={image} alt='crypto' />
               <h5 >{symbol.toUpperCase()}</h5>
               <p>{name}</p>
@@ -48,11 +48,17 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
               </p>
             </td>
             <td>
-              <p>Amount Purchased:</p> <input />
-              <p>Price at Purchase:</p> <input />
-              <br />
-              <br />
-              <br />
+
+              <div class='ui center aligned small input'>
+                <input placeholder='Amount Purchased' />
+              </div>
+              <br /><br />
+
+              <div class='ui center aligned small labeled input'>
+                <label for="amount" class="ui label">$</label>
+                <input placeholder='Price at Purchase' />
+              </div>
+              <br /><br /><br />
               <button class="fluid ui orange button">Add</button>
             </td>
           </tr>
