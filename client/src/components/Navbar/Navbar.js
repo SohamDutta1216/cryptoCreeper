@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import AuthModal from '../Modal/Modal'
 
 export default function Navbar({ setSearch }) {
   const handleChange = (e) => {
@@ -13,7 +14,6 @@ export default function Navbar({ setSearch }) {
           <Link exact to="/">
             <div className="item"> <div class='ui mini image'><img src='/logo.png' /></div></div>
           </Link>
-
           <div className="item">
             <div class="ui large category search">
               <div class="ui icon input">
@@ -39,15 +39,10 @@ export default function Navbar({ setSearch }) {
                 <button class="ui inverted button">Portfolio</button>
               </div>
             </Link>
-
             <div class="item" style={{ fontSize: '20px' }}>
-              <button class='ui orange button'
-                onClick={() => this.openModal()}
-              >Login</button>
+              <AuthModal />
             </div>
-
           </div>
-
         </div>
       </nav>
     </div>

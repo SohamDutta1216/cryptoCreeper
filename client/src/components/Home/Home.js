@@ -1,22 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Coin from './Coin'
-import { Link } from 'react-router-dom'
 
 export default function Home({ filteredCoins, loading }) {
-
   return (
     <div>
       {(loading) ?
         <div class="ui fluid container" style={{ marginTop: '500px', marginBottom: '900px', maxWidth: '100%' }}>
-
           <div class="ui active centered inline massive loader"></div>
-
         </div>
-
-
-
-
-
         :
         <div className="ui container" style={{ marginTop: '150px', maxWidth: '100%' }}>
           <div class="ui center aligned container" style={{ marginBottom: '60px', position: '-webkit-sticky', position: 'sticky', top: '0' }}>
@@ -40,6 +31,9 @@ export default function Home({ filteredCoins, loading }) {
           })}
         </div>
       }
+      <div class="ui active modal">
+
+      </div>
     </div>
   )
 }
