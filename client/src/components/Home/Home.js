@@ -1,6 +1,7 @@
 import React from 'react'
 import Coin from './Coin'
 
+
 export default function Home({ filteredCoins, loading }) {
   return (
     <div>

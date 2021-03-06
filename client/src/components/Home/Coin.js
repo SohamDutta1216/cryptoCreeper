@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 
 export default function Coin({ image, name, symbol, price, volume, priceChange, marketcap, rank }) {
+  const [portfolio, setPortfolio] = useState('')
+  const dispatch = useDispatch()
+
+  const sendCoin = () => {
+    setPortfolio(name)
+  }
+
   return (
 
     <div style={{ marginTop: '10px', marginLeft: '1px', marginRight: '1px' }}>
@@ -13,7 +22,7 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
             <th>Volume</th>
             <th>1H</th>
             <th>Market Cap</th>
-            <th>Investments</th>
+            <th style={{ textAlign: 'center' }}>Add to Portfolio</th>
           </tr>
         </thead>
         <tbody class="ui left aligned">
@@ -38,29 +47,19 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
                 <p style={{ color: 'red' }}>{priceChange}%</p>
               </td>
             ) : (
-                <td>
-                  <p style={{ color: 'green' }}>{priceChange}%</p>
-                </td>
-              )}
+              <td>
+                <p style={{ color: 'green' }}>{priceChange}%</p>
+              </td>
+            )}
             <td>
               <p >
                 {marketcap.toLocaleString()}
               </p>
             </td>
-            <td>
+            <div class='ui center aligned'>
+              <button onClick={sendCoin} class='ui orange button'>+</button>
+            </div>
 
-              <div class='ui center aligned small input'>
-                <input placeholder='Amount Purchased' />
-              </div>
-              <br /><br />
-
-              <div class='ui center aligned small labeled input'>
-                <label for="amount" class="ui label">$</label>
-                <input placeholder='Price at Purchase' />
-              </div>
-              <br /><br /><br />
-              <button class="fluid ui orange button">Add</button>
-            </td>
           </tr>
         </tbody>
 
