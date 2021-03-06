@@ -1,16 +1,43 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form } from 'semantic-ui-react'
 import { GoogleLogin } from 'react-google-login'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 export default function AuthModal() {
+  const dispatch = useDispatch()
   const [form, setForm] = useState(initialState);
   const [open, setOpen] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [isSignup, setSignUp] = useState(false)
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = () => {
 
+  }
 
+  const handleShowPassword = () => setShowPassword((old) => !old)
+  const switchMode = () => {
+    setSignUp((sign) => !sign)
+    handleShowPassword(false)
+  }
+
+  const googleFailure = () => {
+    console.log("Google Sign In was unsuccessful. Try Again Later")
+  }
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+    try {
+      dispatch({ type: 'AUTH', data: { result, token } })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
 
@@ -20,56 +47,78 @@ export default function AuthModal() {
       open={open}
       trigger={<button class="ui orange button">Sign in</button>}
     >
-      <form class="ui form" style={{ margin: '5px' }}>
+      <form class="ui form" style={{ margin: '15px' }} onSubmit={handleSubmit}>
+
+
         <div class='ui inverted segment'>
-          <Modal.Header style={{ textAlign: 'center', fontSize: '40px' }}>Sign In</Modal.Header>
+          <Link to='/'>
+            <button class='ui right floated button' onClick={() => setOpen(false)}>
+              X
+        </button>
+          </Link>
+
+
+          <Modal.Header style={{ textAlign: 'center', fontSize: '40px' }}>{isSignup ? 'Sign Up' : 'Sign In'}</Modal.Header>
+
           <Modal.Content>
+            {
+              isSignup && (
+                <div>
+                  <label>First Name</label>
+                  <input class='field' handleChange={handleChange} name="firstName" ></input>
 
-            <div >
 
-              <label>First Name</label>
-              <input handleChange={handleChange} name="firstName" label="firstName"></input>
-            </div>
+                  <label>Last Name</label>
+                  <input class='field' handleChange={handleChange} name="lastName" ></input>
+                </div>
 
-            <div>
-              <label>Last Name</label>
-              <input handleChange={handleChange} name="lastName" label="lastName"></input>
 
-            </div>
+              )
+            }
 
             <label>Email</label>
             <input
+              name="email"
+              class='field'
               handleChange={handleChange}
-              placeholder='Email' type="email" />
+              placeholder='Email'
+              type="email" />
 
             <label>Password</label>
             <input
+              name="password"
+              class='field'
               handleChange={handleChange}
-              placeholder='Password' type="password" />
+              placeholder='Password' type={showPassword ? 'text' : 'password'} />
+            <br />  <br />
+            <button class='ui mini button' onClick={handleShowPassword}><i class='eye icon' />{showPassword ? 'Hide Password' : 'Show Password'}</button>
+
+            <button
+              class='ui right floated orange button'
+              type="submit"
+            >{isSignup ? 'Sign Up' : 'Sign In'}</button>
+
+            <GoogleLogin
+              clientId="489312559331-8lcppthhivcgf1nkjt4kko6i90apfq33.apps.googleusercontent.com"
+              render={(renderProps) => (
+                <button
+                  class='ui  right floated blue button'
+                  onClick={renderProps.onClick} disabled={renderProps.disabled}
+                >
+                  <i class="google icon"></i>  Continue with Google
+                </button>
+              )}
+              onSuccess={googleSuccess}
+              onFailure={googleFailure}
+              cookiePolicy="single_host_origin"
+            />
+            <button class='ui right floated  button' onClick={switchMode}>
+              {isSignup ? "Already have an account ? Sign In" : "Don't have an account? Sign Up"}
+            </button>
 
 
-            <div class="ui right aligned inverted segment" >
-              <button class='ui button' onClick={() => setOpen(false)}>
-                Close
-        </button>
-              <GoogleLogin
-                clientId="489312559331-8lcppthhivcgf1nkjt4kko6i90apfq33.apps.googleusercontent.com"
-                render={(renderProps) => (
-                  <button
-                    class='ui blue button'
-                    onClick={renderProps.onClick} disabled={renderProps.disabled}
-                  >
-                    <i class="google icon"></i>  Continue with Google
-                  </button>
-                )}
 
-                cookiePolicy="single_host_origin"
-              />
-              <button
-                class='ui orange button'
-                type="submit"
-              >Sign In</button>
-            </div>
+
           </Modal.Content>
           <Modal.Actions>
 

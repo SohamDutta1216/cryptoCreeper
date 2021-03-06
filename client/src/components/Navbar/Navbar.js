@@ -1,8 +1,35 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import decode from 'jwt-decode';
 import AuthModal from '../Modal/Modal'
+import * as actionType from '../../constants/actionTypes';
 
 export default function Navbar({ setSearch }) {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  const logout = () => {
+    dispatch({ type: actionType.LOGOUT });
+
+    history.push('/');
+
+    setUser(null);
+  };
+  useEffect(() => {
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location]);
+
   const handleChange = (e) => {
     setSearch(e.target.value)
   }
@@ -30,18 +57,35 @@ export default function Navbar({ setSearch }) {
           </div>
           <div class="ui right inverted menu">
             <Link to='/'>
-              <div class="item" style={{ fontSize: '20px' }} >
+              <div class="item" >
                 <button class="ui inverted button">Currencies</button>
               </div>
             </Link>
-            <Link to='/portfolio'>
-              <div class="item" style={{ fontSize: '20px' }} >
-                <button class="ui inverted button">Portfolio</button>
+            {user?.result ? (
+              <div>
+                <Link to='/portfolio'>
+                  <div class="item" >
+                    <button class="ui inverted button">{`${user?.result.name}'s`} Portfolio</button>
+                  </div>
+                </Link>
+                <div class="item" >
+                  <Link to='/'>
+                    <button class='ui orange button'
+                      onClick={logout}
+                    >Logout</button>
+                  </Link>
+                </div>
               </div>
-            </Link>
-            <div class="item" style={{ fontSize: '20px' }}>
-              <AuthModal />
-            </div>
+            ) : (
+
+              <div class="item" >
+                <Link to='/auth'>
+                  <AuthModal />
+                </Link>
+              </div>
+            )}
+
+
           </div>
         </div>
       </nav>

@@ -4,6 +4,7 @@ import Home from './components/Home/Home'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import axios from 'axios'
 import Portfolio from './components/Portfolio/Portfolio'
+import AuthModal from './components/Modal/Modal';
 
 export default function App() {
   const [coins, setCoinData] = useState([])
@@ -28,6 +29,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" render={() => <Home filteredCoins={filteredCoins} loading={loading} setLoading={setLoading} />} />
         <Route exact path='/portfolio' component={Portfolio} />
+        <Route exact path='/auth' component={AuthModal} />
       </Switch>
     </BrowserRouter>
   )
