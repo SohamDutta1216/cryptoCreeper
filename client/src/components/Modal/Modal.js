@@ -1,24 +1,34 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form } from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 import { GoogleLogin } from 'react-google-login'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+import { useHistory } from 'react-router-dom';
+import { signup, signin } from '../../actions/auth'
+const initialState = { firstName: '', lastName: '', email: '', password: '' };
 
 export default function AuthModal() {
   const dispatch = useDispatch()
+  const history = useHistory();
   const [form, setForm] = useState(initialState);
   const [open, setOpen] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [isSignup, setSignUp] = useState(false)
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleSubmit = () => {
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (isSignup) {
+      dispatch(signup(form, history))
+    } else {
+      dispatch(signin(form, history))
+
+    }
   }
 
   const handleShowPassword = () => setShowPassword((old) => !old)
+
   const switchMode = () => {
     setSignUp((sign) => !sign)
     handleShowPassword(false)
@@ -33,7 +43,6 @@ export default function AuthModal() {
     const token = res?.tokenId;
     try {
       dispatch({ type: 'AUTH', data: { result, token } })
-
     } catch (error) {
       console.log(error)
     }
@@ -65,11 +74,11 @@ export default function AuthModal() {
               isSignup && (
                 <div>
                   <label>First Name</label>
-                  <input class='field' handleChange={handleChange} name="firstName" ></input>
+                  <input class='field' onChange={handleChange} name="firstName" ></input>
 
 
                   <label>Last Name</label>
-                  <input class='field' handleChange={handleChange} name="lastName" ></input>
+                  <input class='field' onChange={handleChange} name="lastName" ></input>
                 </div>
 
 
@@ -80,7 +89,7 @@ export default function AuthModal() {
             <input
               name="email"
               class='field'
-              handleChange={handleChange}
+              onChange={handleChange}
               placeholder='Email'
               type="email" />
 
@@ -88,12 +97,14 @@ export default function AuthModal() {
             <input
               name="password"
               class='field'
-              handleChange={handleChange}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
               placeholder='Password' type={showPassword ? 'text' : 'password'} />
             <br />  <br />
             <button class='ui mini button' onClick={handleShowPassword}><i class='eye icon' />{showPassword ? 'Hide Password' : 'Show Password'}</button>
 
             <button
+              onClick={handleSubmit}
               class='ui right floated orange button'
               type="submit"
             >{isSignup ? 'Sign Up' : 'Sign In'}</button>

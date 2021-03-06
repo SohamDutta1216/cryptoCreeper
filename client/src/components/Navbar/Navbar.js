@@ -18,6 +18,7 @@ export default function Navbar({ setSearch }) {
 
     setUser(null);
   };
+
   useEffect(() => {
     const token = user?.token;
 
@@ -39,7 +40,7 @@ export default function Navbar({ setSearch }) {
       <nav>
         <div className="ui fluid fixed large inverted menu">
           <Link exact to="/">
-            <div className="item"> <div class='ui mini image'><img src='/logo.png' /></div></div>
+            <div className="item"> <div class='ui mini image'><img src='/logo.png' alt='logo' /></div></div>
           </Link>
           <div className="item">
             <div class="ui large category search">

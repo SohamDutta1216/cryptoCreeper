@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Coin from './Coin'
 
 export default function Home({ filteredCoins, loading }) {
@@ -10,7 +10,7 @@ export default function Home({ filteredCoins, loading }) {
         </div>
         :
         <div className="ui container" style={{ marginTop: '150px', maxWidth: '100%' }}>
-          <div class="ui center aligned container" style={{ marginBottom: '60px', position: '-webkit-sticky', position: 'sticky', top: '0' }}>
+          <div class="ui center aligned container" style={{ marginBottom: '60px', position: 'sticky', top: '0' }}>
           </div>
           <div>
           </div>
