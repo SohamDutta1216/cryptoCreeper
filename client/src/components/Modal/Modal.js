@@ -46,6 +46,7 @@ export default function AuthModal() {
     } catch (error) {
       console.log(error)
     }
+    history.push('/')
   }
 
   return (

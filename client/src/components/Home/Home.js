@@ -2,7 +2,7 @@ import React from 'react'
 import Coin from './Coin'
 
 
-export default function Home({ filteredCoins, loading }) {
+export default function Home({ filteredCoins, loading, setPortfolio, portfolio }) {
   return (
     <div>
       {(loading) ?
@@ -27,6 +27,8 @@ export default function Home({ filteredCoins, loading }) {
                 image={coin.image}
                 priceChange={coin.price_change_percentage_24h}
                 rank={coin.market_cap_rank}
+                setPortfolio={setPortfolio}
+                portfolio={portfolio}
               />
             );
           })}
