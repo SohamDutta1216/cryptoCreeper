@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import Portfolio from '../Portfolio/Portfolio'
+import React from 'react'
 
 
-export default function Coin({ image, name, symbol, price, volume, priceChange, marketcap, rank, setPortfolio, portfolio }) {
-  const dispatch = useDispatch()
 
+export default function Coin({ image, name, symbol, price, volume, priceChange, marketcap, rank, setPortfolio, portfolio, user }) {
   const sendCoin = (coinName) => {
     setPortfolio(portfolio.concat(coinName))
     console.log(portfolio)
@@ -23,7 +20,8 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
             <th>Volume</th>
             <th>1H</th>
             <th>Market Cap</th>
-            <th style={{ textAlign: 'center' }}>Add to Portfolio</th>
+            {user?.result ? (<th style={{ textAlign: 'center' }}>Add to Portfolio</th>) : (<div> </div>)}
+
           </tr>
         </thead>
         <tbody class="ui left aligned">
@@ -57,9 +55,10 @@ export default function Coin({ image, name, symbol, price, volume, priceChange, 
                 {marketcap.toLocaleString()}
               </p>
             </td>
-            <div class='ui center aligned'>
+            {user?.result ? (<div class='ui center aligned'>
               <button onClick={() => sendCoin(name)} class='ui orange button'>+</button>
-            </div>
+            </div>) : (<div> </div>)}
+
 
           </tr>
         </tbody>

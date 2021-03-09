@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 import AuthModal from '../Modal/Modal'
 import * as actionType from '../../constants/actionTypes';
 
-export default function Navbar({ setSearch }) {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+export default function Navbar({ setSearch, user, setUser }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -38,7 +37,7 @@ export default function Navbar({ setSearch }) {
 
     <div>
       <nav>
-        <div className="ui fluid fixed large inverted menu">
+        <div className="ui fluid fixed inverted menu">
           <Link exact to="/">
             <div className="item"> <div class='ui mini image'><img src='/logo.png' alt='logo' /></div></div>
           </Link>
@@ -57,18 +56,23 @@ export default function Navbar({ setSearch }) {
 
           </div>
           <div class="ui right inverted menu">
-            <Link to='/'>
-              <div class="item" >
+            <div class="item" >
+              <Link to='/'>
+
                 <button class="ui inverted button">Currencies</button>
-              </div>
-            </Link>
+
+              </Link>
+            </div>
             {user?.result ? (
-              <div>
-                <Link to='/portfolio'>
-                  <div class="item" >
-                    <button class="ui inverted button">{`${user?.result.name}'s`} Portfolio</button>
-                  </div>
-                </Link>
+              <div class='ui left inverted menu'>
+                <div class="item" >
+                  <Link to='/portfolio'>
+
+                    <button class="ui inverted button">{`${user?.result.name}'s`} Watch List</button>
+
+                  </Link>
+                </div>
+
                 <div class="item" >
                   <Link to='/'>
                     <button class='ui orange button'

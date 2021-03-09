@@ -2,7 +2,8 @@ import React from 'react'
 import Coin from './Coin'
 
 
-export default function Home({ filteredCoins, loading, setPortfolio, portfolio }) {
+export default function Home({ filteredCoins, loading, setPortfolio, portfolio, user }) {
+
   return (
     <div>
       {(loading) ?
@@ -29,6 +30,7 @@ export default function Home({ filteredCoins, loading, setPortfolio, portfolio }
                 rank={coin.market_cap_rank}
                 setPortfolio={setPortfolio}
                 portfolio={portfolio}
+                user={user}
               />
             );
           })}
@@ -37,6 +39,8 @@ export default function Home({ filteredCoins, loading, setPortfolio, portfolio }
       <div class="ui active modal">
 
       </div>
+
     </div>
+
   )
 }
